@@ -1,0 +1,87 @@
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font-size: 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    border: none;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    --primary-color: #26547C;
+
+    color: var(--primary-color);
+}
+
+html {
+    height: 100vh;
+}
+
+header {
+    display: flex;
+}
+
+button {
+    border-radius: 1rem;
+    aspect-ratio: 1;
+    width: 2rem;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.new-task-btn {
+    background-color: white;
+    border: 1px solid var(--primary-color);
+    justify-self: center;
+}
+
+footer,
+header>button {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+#main-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.main-column {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+}
+
+footer {
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.modal {
+    margin: auto;
+    height: 70%;
+    width: min(300px);
+}
+
+.modal>form {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 1fr;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.form-element {
+    display: grid;
+}
+
+.form-element>input {
+    border: 1px solid var(--primary-color);
+}

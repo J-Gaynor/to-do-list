@@ -6,3 +6,8 @@ export class Todo {
         this.priority = priority;
     }
 };
+
+export function createTask(title, description, dueDate, priority, project) {
+    const newTask = new Todo(title, description, dueDate, priority);
+    return newTask;
+}
