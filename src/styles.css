@@ -20,6 +20,38 @@ html {
 
 header {
     display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    position: relative;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0.5rem;
+    background-color: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 0.25rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 10;
+    min-width: 150px;
+}
+
+.dropdown-item {
+    aspect-ratio: auto;
+    width: 100%;
+    border-radius: 0;
+    border: none;
+    background: white;
+    color: var(--primary-color);
+    padding: 0.5rem 1rem;
+    text-align: left;
+}
+
+.dropdown-item:hover {
+    background-color: #eee;
 }
 
 button {

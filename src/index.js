@@ -46,9 +46,10 @@ function createTaskModal() {
             const date = dateInput ? dateInput.value : "";
             const priority = priorityInput ? priorityInput.value : "";
 
-            const newTask = createTask(title, desc, date, priority, "default");
-            addTaskToProject("default", newTask);
-            renderTasks("default");
+            const currentProject = document.querySelector("#project-name").textContent || "default";
+            const newTask = createTask(title, desc, date, priority, currentProject);
+            addTaskToProject(currentProject, newTask);
+            renderTasks(currentProject);
         }
         dialog.remove();
     });
@@ -81,9 +82,44 @@ function createProjectModal() {
             const currentProjects = getAllProjects();
             currentProjects.push(new Project(title));
             setProjects(currentProjects);
+
+            const projectName = document.querySelector("#project-name");
+            projectName.textContent = title;
+            renderTasks(title);
         }
         dialog.remove();
     });
+}
+
+function toggleProjectDropdown() {
+    const existingDropdown = document.querySelector("#project-dropdown");
+    if (existingDropdown) {
+        existingDropdown.remove();
+        return;
+    }
+
+    const dropdown = document.createElement("div");
+    dropdown.id = "project-dropdown";
+    dropdown.className = "dropdown-menu";
+
+    const projects = getAllProjects();
+    projects.forEach(project => {
+        const item = document.createElement("button");
+        item.className = "dropdown-item";
+        item.textContent = project.name;
+
+        item.addEventListener("click", () => {
+            const projectName = document.querySelector("#project-name");
+            projectName.textContent = project.name;
+            renderTasks(project.name);
+            dropdown.remove();
+        });
+
+        dropdown.appendChild(item);
+    });
+
+    const header = document.querySelector("header");
+    header.appendChild(dropdown);
 }
 
 function renderTasks(project) {
@@ -168,6 +204,16 @@ function renderTasks(project) {
     const addProjectBtn = document.querySelector("#new-project");
     addProjectBtn.addEventListener("click", createProjectModal);
 
+    const switchProjectBtn = document.querySelector("#switch-project");
+    switchProjectBtn.addEventListener("click", toggleProjectDropdown);
+
+    document.addEventListener("click", (e) => {
+        const dropdown = document.querySelector("#project-dropdown");
+        if (dropdown && !dropdown.contains(e.target) && e.target !== switchProjectBtn) {
+            dropdown.remove();
+        }
+    });
+
     const mainColumns = document.querySelectorAll(".main-column");
     for (let i = 0; i < mainColumns.length; i++) {
         let newTaskBtn = document.createElement("button");
@@ -179,3 +225,4 @@ function renderTasks(project) {
 
     renderTasks("default");
 })();
+
