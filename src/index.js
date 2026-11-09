@@ -148,6 +148,7 @@ function renderTasks(project) {
         const rightShift = document.createElement("button");
 
         taskDiv.className = "task-div";
+        taskShift.className = "task-buttons";
         taskTitle.textContent = task.title;
         taskDesc.textContent = task.description;
         taskDue.textContent = task.dueDate;

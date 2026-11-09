@@ -14,8 +14,15 @@
     color: var(--primary-color);
 }
 
-html {
+html,
+body {
     height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
 
 header {
@@ -83,12 +90,20 @@ h2 {
 #main-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    padding: 0.5rem;
+    gap: 0.5rem;
+    flex: 1;
+    min-height: 0;
 }
 
 .main-column {
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: 1fr;
+    gap: 0.5rem;
+    overflow-y: auto;
+    min-height: 0;
+    align-content: start;
 }
 
 .task-div {
@@ -96,6 +111,17 @@ h2 {
     border-radius: 0.25rem;
     display: grid;
     grid-template-columns: 1fr;
+    padding: 0.5rem;
+    gap: 0.5rem;
+}
+
+.column-header {
+    text-align: center;
+}
+
+.task-buttons {
+    display: flex;
+    gap: 0.5rem;
 }
 
 .del-button {
@@ -106,6 +132,8 @@ h2 {
 footer {
     padding: 0.5rem;
     text-align: center;
+    flex-shrink: 0;
+    width: 100%;
 }
 
 .modal {
