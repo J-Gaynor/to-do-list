@@ -1,5 +1,5 @@
 import './styles.css';
-import { getAllProjects, addTaskToProject, getProjectByName } from './projects';
+import { getAllProjects, addTaskToProject, getProjectByName, Project, setProjects } from './projects';
 import { createTask, deleteTask, changeStatus } from './todo';
 
 function createTaskModal() {
@@ -49,6 +49,38 @@ function createTaskModal() {
             const newTask = createTask(title, desc, date, priority, "default");
             addTaskToProject("default", newTask);
             renderTasks("default");
+        }
+        dialog.remove();
+    });
+}
+
+function createProjectModal() {
+    const dialog = document.createElement("dialog");
+    dialog.className = "modal";
+
+    dialog.innerHTML = `
+        <form method="dialog">
+            <div class="form-element">
+            <label for="title"> Title </label>
+            <input name="title" id="title" placeholder="Task title" required autofocus>
+            <button value="save">Add</button>
+            <button value="cancel" formnovalidate>Cancel</button>
+            </div>
+        </form>
+    `;
+
+    document.body.appendChild(dialog);
+    dialog.showModal();
+
+    dialog.addEventListener("close", () => {
+        if (dialog.returnValue === "save") {
+            const titleInput = dialog.querySelector("input[name='title']");
+
+            const title = titleInput ? titleInput.value : "";
+
+            const currentProjects = getAllProjects();
+            currentProjects.push(new Project(title));
+            setProjects(currentProjects);
         }
         dialog.remove();
     });
@@ -127,12 +159,14 @@ function renderTasks(project) {
 }
 
 (() => {
-    getAllProjects();
+    const allProjects = getAllProjects();
+    const defaultProject = allProjects[0];
 
-    const headerNewTaskBtn = document.querySelector("#new-task");
-    if (headerNewTaskBtn) {
-        headerNewTaskBtn.addEventListener("click", createTaskModal);
-    }
+    const projectName = document.querySelector("#project-name");
+    projectName.textContent = `${defaultProject.name}`;
+
+    const addProjectBtn = document.querySelector("#new-project");
+    addProjectBtn.addEventListener("click", createProjectModal);
 
     const mainColumns = document.querySelectorAll(".main-column");
     for (let i = 0; i < mainColumns.length; i++) {
